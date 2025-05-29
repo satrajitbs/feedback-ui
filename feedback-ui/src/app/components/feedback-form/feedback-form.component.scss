@@ -1,0 +1,39 @@
+.form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+  }
+
+  .form-field {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    textarea {
+      width: 100%;
+    }
+
+    .p-error {
+      display: block;
+      margin-top: 0.25rem;
+      color: #ef4444;
+    }
+  }
+
+  .button-group {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

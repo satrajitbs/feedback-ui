@@ -1,0 +1,40 @@
+<div class="dashboard-container">
+  <h2>Feedback Dashboard</h2>
+  <p-table [value]="feedbacks()" [loading]="loading()">
+    <!-- Header Template -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Feedback</th>
+        <th>Rating</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <!-- Loading Template -->
+    <ng-template pTemplate="loading">
+      <tr>
+        <td colspan="6" class="text-center">
+          <p-progressSpinner *ngIf="loading()"></p-progressSpinner>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Body Template -->
+    <ng-template pTemplate="body" let-feedback>
+      <tr>
+        <td>{{ feedback.name }}</td>
+        <td>{{ feedback.email }}</td>
+        <td>{{ feedback.feedback }}</td>
+        <td>{{ feedback.rating }}/5</td>
+        <td>{{ feedback.createdAt | date:'medium' }}</td>
+        <td>
+          <button pButton icon="pi pi-pencil" (click)="editFeedback(feedback._id)"></button>
+          <button pButton icon="pi pi-trash" (click)="deleteFeedback(feedback._id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

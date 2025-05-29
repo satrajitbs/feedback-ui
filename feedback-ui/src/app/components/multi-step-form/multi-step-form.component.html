@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="p-card">
+    <p-steps [model]="steps" [activeIndex]="activeIndex()"></p-steps>
+
+    <div class="p-card-body">
+      <form [formGroup]="form" (ngSubmit)="submitForm()">
+        <!-- Step 1: Personal Info -->
+        <div *ngIf="activeIndex() === 0" class="step-content" formGroupName="personalInfo">
+          <div class="p-field">
+            <label for="name">Name</label>
+            <input pInputText id="name" formControlName="name"
+                   [class.p-invalid]="form.get('personalInfo.name')?.invalid && form.get('personalInfo.name')?.touched" />
+            <small *ngIf="form.get('personalInfo.name')?.invalid && form.get('personalInfo.name')?.touched" 
+                   class="p-error">Name is required</small>
+          </div>
+
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input pInputText id="email" type="email" formControlName="email"
+                   [class.p-invalid]="form.get('personalInfo.email')?.invalid && form.get('personalInfo.email')?.touched" />
+            <small *ngIf="form.get('personalInfo.email')?.hasError('required') && form.get('personalInfo.email')?.touched" 
+                   class="p-error">Email is required</small>
+            <small *ngIf="form.get('personalInfo.email')?.hasError('email') && form.get('personalInfo.email')?.touched" 
+                   class="p-error">Invalid email format</small>
+          </div>
+        </div>
+
+        <!-- Step 2: Feedback Details -->
+        <div *ngIf="activeIndex() === 1" class="step-content" formGroupName="feedbackDetails">
+          <div class="p-field">
+            <label for="feedback">Your Feedback</label>
+            <textarea pInputTextarea id="feedback" formControlName="feedback" rows="5"
+                      [class.p-invalid]="form.get('feedbackDetails.feedback')?.invalid && form.get('feedbackDetails.feedback')?.touched"></textarea>
+            <small *ngIf="form.get('feedbackDetails.feedback')?.invalid && form.get('feedbackDetails.feedback')?.touched" 
+                   class="p-error">Feedback is required</small>
+          </div>
+
+          <div class="p-field">
+            <label>Rating</label>
+            <p-rating formControlName="rating" [cancel]="false" [stars]="5"
+                      [class.p-invalid]="form.get('feedbackDetails.rating')?.invalid && form.get('feedbackDetails.rating')?.touched"></p-rating>
+            <small *ngIf="form.get('feedbackDetails.rating')?.invalid && form.get('feedbackDetails.rating')?.touched" 
+                   class="p-error">Minimum 1 star required</small>
+          </div>
+        </div>
+
+        <!-- Step 3: Final Step (optional) -->
+        <div *ngIf="activeIndex() === 2" class="step-content summary">
+          <h3>Review Your Feedback</h3>
+        
+          <div class="summary-row">
+            <span class="summary-label">Name:</span>
+            <span class="summary-value">{{ form.get('personalInfo.name')?.value }}</span>
+          </div>
+        
+          <div class="summary-row">
+            <span class="summary-label">Email:</span>
+            <span class="summary-value">{{ form.get('personalInfo.email')?.value }}</span>
+          </div>
+        
+          <div class="summary-row">
+            <span class="summary-label">Feedback:</span>
+            <span class="summary-value">{{ form.get('feedbackDetails.feedback')?.value }}</span>
+          </div>
+        
+          <div class="summary-row">
+            <span class="summary-label">Rating:</span>
+            <span class="summary-value">{{ form.get('feedbackDetails.rating')?.value }}/5</span>
+          </div>
+        </div>
+        
+
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+          <button pButton
+                  *ngIf="activeIndex() > 0"
+                  type="button"
+                  label="Back"
+                  (click)="prevStep()"
+                  class="p-button-secondary"></button>
+
+          <button pButton
+                  *ngIf="activeIndex() < 2"
+                  type="button"
+                  label="Next"
+                  (click)="nextStep()"
+                  [disabled]="getCurrentStepGroup().invalid"
+                  class="p-button-primary"></button>
+
+          <button pButton
+                  *ngIf="activeIndex() === 2"
+                  type="submit"
+                  [label]="loading() ? '' : (isEditMode() ? 'Update' : 'Submit')"
+                  [disabled]="form.invalid || loading()">
+            <i *ngIf="loading()" class="pi pi-spin pi-spinner"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
