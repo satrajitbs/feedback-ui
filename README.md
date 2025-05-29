@@ -14,7 +14,16 @@ Before you begin, ensure you have the following installed:
 - **Angular CLI** (latest version)
 
 ```bash
+git clone https://github.com/satrajitbs/feedback-ui.git
+cd feedback-ui
 # Install Angular CLI globally
 npm install -g @angular/cli@latest
+npm install --legacy-peer-deps
+ng serve
 ```
-
+## Dependencies
+This project uses:
+PrimeNG v16.3.1 (UI Component Library)
+PrimeIcons v6.0.1 (Icon set)
+Angular Material (UI Components)
+Angular Animations
